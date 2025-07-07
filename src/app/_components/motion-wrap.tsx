@@ -26,4 +26,6 @@ const MotionWrap: React.FC<MotionWrapProps> = ({
   );
 };
 
+
+
 export default MotionWrap;

@@ -1,20 +1,13 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import {
-  FiGitBranch,
-  FiDatabase,
-  FiTerminal,
-  FiMail,
-  FiArrowUpRight,
-} from "react-icons/fi";
+import { FiGitBranch, FiDatabase, FiTerminal, FiMail } from "react-icons/fi";
 import {
   FaReact,
   FaNodeJs,
   FaLaravel,
   FaDocker,
   FaGithub,
-  FaExternalLinkAlt,
 } from "react-icons/fa";
 import {
   SiNextdotjs,
@@ -31,8 +24,7 @@ import {
 } from "react-icons/si";
 import { BiMenu, BiX } from "react-icons/bi";
 import { FaLinkedin, FaTwitter } from "react-icons/fa6";
-import Image from "next/image";
-import MotionWrap from "@/app/portfolio/_components/motion-wrap";
+import MotionWrap from "@/app/_components/motion-wrap";
 
 interface Project {
   id: number;
@@ -68,14 +60,14 @@ interface TechStack {
   devops: Tech[];
 }
 
-const PHRASES = [
+const phrases = [
   "Backend Engineer",
   "Full-Stack Developer",
   "DevOps Engineer",
   "Software Engineer",
 ];
 
-const Portfolio: React.FC = () => {
+const PortfolioClient: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [currentPhrase, setCurrentPhrase] = useState(0);
   const [currentChar, setCurrentChar] = useState(0);
@@ -229,7 +221,7 @@ const Portfolio: React.FC = () => {
   };
 
   useEffect(() => {
-    const activePhrase = PHRASES[currentPhrase];
+    const activePhrase = phrases[currentPhrase];
     if (!activePhrase) return;
 
     const timeout = setTimeout(
@@ -249,7 +241,7 @@ const Portfolio: React.FC = () => {
           // Hanya ganti frasa SETELAH selesai menghapus (currentChar === 0)
           if (isDeleting && currentChar === 0) {
             setIsDeleting(false); // Berhenti menghapus
-            setCurrentPhrase((prev) => (prev + 1) % PHRASES.length); // Pindah ke frasa berikutnya
+            setCurrentPhrase((prev) => (prev + 1) % phrases.length); // Pindah ke frasa berikutnya
           }
           // Jika tidak, berarti sudah selesai mengetik, maka mulai hapus
           else {
@@ -462,6 +454,7 @@ const Portfolio: React.FC = () => {
                   learning journey.
                 </p>
               </div>
+
               <div className="relative">
                 <div className="absolute -inset-4 rounded-xl bg-gradient-to-r from-green-400 to-cyan-400 opacity-20 blur"></div>
                 <div className="relative rounded-xl border border-gray-700 bg-gray-950/70 p-6 backdrop-blur-md">
@@ -502,9 +495,8 @@ const Portfolio: React.FC = () => {
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {projects.map((project, index) => (
               <MotionWrap key={project.id} delay={index * 0.1}>
-                <div className="rounded-xl h-full border border-gray-700 bg-gray-800/70 p-6 backdrop-blur-md transition duration-300 hover:-translate-y-1 hover:transform hover:shadow-lg hover:shadow-green-400/10">
+                <div className="h-full rounded-xl border border-gray-700 bg-gray-800/70 p-6 backdrop-blur-md transition duration-300 hover:-translate-y-1 hover:transform hover:shadow-lg hover:shadow-green-400/10">
                   <div className="mb-4 flex items-center">
-                    <div className="mr-2 h-3 w-3 rounded-full bg-green-400"></div>
                     <h3 className="bg-gradient-to-r from-green-400 to-cyan-400 bg-clip-text text-xl font-bold text-transparent">
                       {project.title}
                     </h3>
@@ -844,4 +836,4 @@ const Portfolio: React.FC = () => {
   );
 };
 
-export default Portfolio;
+export default PortfolioClient;

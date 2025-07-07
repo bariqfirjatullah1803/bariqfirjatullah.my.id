@@ -5,19 +5,21 @@ import { Geist } from "next/font/google";
 
 import { TRPCReactProvider } from "@/trpc/react";
 import { ClerkProvider } from "@clerk/nextjs";
+import React from "react";
 
 export const metadata: Metadata = {
-  title: "Bariq Firjatullah - Full-Stack Developer & DevOps Engineer",
+  metadataBase: new URL("https://bariqfirjatullah.my.id"),
+  title: "Bariq Firjatullah | Full-Stack Developer & DevOps Engineer",
   description:
-    "Portfolio Bariq Firjatullah, seorang Software Engineer dengan keahlian Full-Stack Development dan DevOps. Berpengalaman dalam membangun aplikasi web modern dan mengelola infrastruktur server.",
+    "Portofolio Bariq Firjatullah, seorang Web Developer dan Instruktur dengan pengalaman lebih dari 3 tahun dalam Full-Stack Development (TypeScript, Node.js, PHP/Laravel, React) dan manajemen infrastruktur (Docker, Nginx, CI/CD). Siap untuk proyek menantang berikutnya.",
   openGraph: {
-    title: "Bariq Firjatullah - Full-Stack & DevOps",
+    title: "Portofolio Bariq Firjatullah - Full-Stack & DevOps Specialist",
     description:
-      "Jelajahi proyek, pengalaman, dan keahlian teknis dari Bariq Firjatullah.",
-    url: "https://www.website-anda.com", // <-- GANTI DENGAN URL WEBSITE ANDA
+      "Jelajahi proyek, pengalaman, dan keahlian teknis Bariq Firjatullah dalam pengembangan web modern dan otomatisasi infrastruktur.",
+    url: "https://bariqfirjatullah.my.id", // PASTIKAN URL INI BENAR
     images: [
       {
-        url: "/og-image.png", // <-- Pastikan Anda punya gambar ini di folder /public
+        url: "/og-image.png", // PASTIKAN FILE GAMBAR INI ADA DI FOLDER /public
         width: 1200,
         height: 630,
       },
@@ -25,6 +27,17 @@ export const metadata: Metadata = {
     locale: "id_ID",
     type: "website",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "Bariq Firjatullah | Full-Stack Developer & DevOps Engineer",
+    description:
+      "Web Developer dengan keahlian di TypeScript, Node.js, Laravel, React, Docker, dan CI/CD.",
+    images: ["/og-image.png"], // PASTIKAN GAMBAR INI ADA
+  },
+  keywords:
+    "Full-Stack Developer, DevOps Engineer, Web Developer, TypeScript, Node.js, PHP, Laravel, React, Docker, Nginx, CI/CD, Instruktur Web, PortfolioClient, Bariq Firjatullah, Malang",
+  creator: "Bariq Firjatullah",
+  publisher: "Bariq Firjatullah",
 };
 
 const geist = Geist({
@@ -39,17 +52,42 @@ export default function RootLayout({
     "@context": "https://schema.org",
     "@type": "Person",
     name: "Bariq Firjatullah",
-    url: "https://bariqfirjatullah.my.id", // <-- GANTI DENGAN URL WEBSITE ANDA
-    jobTitle: "Software Engineer (Full-Stack & DevOps)",
-    email: "bariqfirjatullah1803@gmail.com", // <-- GANTI DENGAN EMAIL ANDA
+    url: "https://bariqfirjatullah.my.id", // PASTIKAN URL INI BENAR
+    jobTitle: "Web Developer & DevOps Engineer",
+    email: "bariqfirjatullah1803@gmail.com",
+    telephone: "+6285173001803",
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: "Malang",
+      addressRegion: "Jawa Timur",
+      addressCountry: "ID",
+    },
+    alumniOf: {
+      "@type": "EducationalOrganization",
+      name: "SMKN 4 Malang",
+    },
+    knowsAbout: [
+      "Full-Stack Development",
+      "DevOps",
+      "TypeScript",
+      "Node.js",
+      "PHP",
+      "Laravel",
+      "React.js",
+      "Docker",
+      "Nginx",
+      "CI/CD",
+      "SEO",
+    ],
     sameAs: [
-      "https://www.linkedin.com/in/bariq-firjatullah",
-      "https://github.com/bariqfirjatullah1803",
+      "https://www.linkedin.com/in/bariq-firjatullah/",
+      "https://github.com/bariqfirjatullah1803", // Tambahkan jika Anda punya GitHub
+      // "https://www.website-anda.com/blog", // Tambahkan jika punya blog
     ],
   };
   return (
     <ClerkProvider>
-      <html lang="en" className={`${geist.variable}`}>
+      <html lang="id" className={`${geist.variable}`}>
         <body>
           <script
             type="application/ld+json"

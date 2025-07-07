@@ -1,12 +1,10 @@
-import { api, HydrateClient } from "@/trpc/server";
-import Portfolio from "@/app/portfolio/page";
+import { HydrateClient } from "@/trpc/server";
+import PortfolioClient from "@/app/_components/portfolio-client";
 
 export default async function Home() {
-  void api.post.getLatest.prefetch();
-
   return (
     <HydrateClient>
-      <Portfolio />
+      <PortfolioClient />
     </HydrateClient>
   );
 }
