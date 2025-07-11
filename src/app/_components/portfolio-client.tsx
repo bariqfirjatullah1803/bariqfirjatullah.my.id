@@ -86,21 +86,20 @@ const PortfolioClient: React.FC = () => {
       description:
         "A full-stack e-commerce platform connecting artists with collectors. Features artist profiles, artwork galleries, and a secure transaction system.",
       backend: "Laravel, MySQL",
-      frontend: "React, Tailwind CSS",
-      devops: "Docker, Nginx, VPS",
-      githubUrl: "#", // <-- Ganti dengan URL GitHub Anda
-      demoUrl: "#", // <-- Ganti dengan URL Demo Anda
+      frontend: "Tailwind CSS, Livewire",
+      devops: "CPanel",
+      liveUrl: "https://artiknesia.com/", // <-- Ganti dengan URL Demo Anda
     },
     {
       id: 2,
-      title: "Karisma Academy - LMS Backend",
+      title: "Karisma Academy - LMS",
       imageUrl: "https://picsum.photos/200/300?random=2",
       description:
         "Designed and developed the core backend architecture for a bootcamp-style Learning Management System, handling course enrollment, materials, and student progress.",
-      backend: "Node.js, MySQL",
-      frontend: "API consumed by Frontend Team",
-      devops: "Docker, CI/CD (GitHub Actions)",
-      githubUrl: "#", // <-- Ganti dengan URL GitHub Anda
+      backend: "MySQL, Hono.js",
+      frontend: "Next.js, Tailwind CSS",
+      devops: "Docker, Nginx, CI/CD (GitHub Actions)",
+      liveUrl: "https://karismaacademy.com/", // <-- Ganti dengan URL Demo Anda
     },
     {
       id: 3,
@@ -109,10 +108,9 @@ const PortfolioClient: React.FC = () => {
       description:
         "A specialized e-commerce website for plumbing supplies. Developed full-stack, from product catalogs and cart functionality to order processing.",
       backend: "Laravel, MySQL",
-      frontend: "Next.js, Tailwind CSS",
-      devops: "Docker, Nginx",
-      githubUrl: "#", // <-- Ganti dengan URL GitHub Anda
-      liveUrl: "#", // <-- Ganti dengan URL Live Anda
+      frontend: "React.js, Tailwind CSS",
+      devops: "CI/CD (GitHub Actions), CPanel",
+      liveUrl: "entrepreneurid.my.id", // <-- Ganti dengan URL Live Anda
     },
     {
       id: 4,
@@ -120,11 +118,10 @@ const PortfolioClient: React.FC = () => {
       imageUrl: "https://picsum.photos/200/300?random=4",
       description:
         "An elegant and responsive company profile website for a real estate business in Malang. Showcases property types, galleries, and lead generation forms.",
-      backend: "Node.js (for contact form)",
-      frontend: "Next.js, Tailwind CSS",
-      devops: "Vercel", // Vercel sangat cocok untuk Next.js
-      githubUrl: "#", // <-- Ganti dengan URL GitHub Anda
-      liveUrl: "#", // <-- Ganti dengan URL Live Anda
+      backend: "Codeigniter, MySQL",
+      frontend: "Bootstrap",
+      devops: "CPanel", // Vercel sangat cocok untuk Next.js
+      liveUrl: "https://istanasafira.com/", // <-- Ganti dengan URL Live Anda
     },
     {
       id: 5,
@@ -132,10 +129,10 @@ const PortfolioClient: React.FC = () => {
       imageUrl: "https://picsum.photos/200/300?random=5",
       description:
         "A full-stack application to forecast material requirements based on historical data. Features data input, processing, and visualization dashboards.",
-      backend: "Python, Node.js, MySQL",
-      frontend: "React, Tailwind CSS",
-      devops: "Docker, Nginx, VPS",
-      githubUrl: "#", // <-- Ganti dengan URL GitHub Anda
+      backend: "Codeigniter, MySQL",
+      frontend: "Bootstrap",
+      devops: "CPanel",
+      githubUrl: "https://github.com/bariqfirjatullah1803/Aplikasi-Forecasting-Data-Bahan", // <-- Ganti dengan URL GitHub Anda
     },
     {
       id: 6,
@@ -145,9 +142,7 @@ const PortfolioClient: React.FC = () => {
         "A web portal for a local gym. Allows members to manage their subscriptions, view class schedules, and book sessions online, increasing engagement.",
       backend: "Laravel, MySQL",
       frontend: "React, Tailwind CSS",
-      devops: "Docker, VPS",
-      githubUrl: "#", // <-- Ganti dengan URL GitHub Anda
-      liveUrl: "#", // <-- Ganti dengan URL Live Anda
+      devops: "CPanel",
     },
   ];
 
