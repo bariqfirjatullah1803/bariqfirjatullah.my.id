@@ -1,0 +1,11 @@
+# Allow all friendly crawlers to access the site
+User-agent: *
+Allow: /
+
+# Disallow crawlers from accessing Next.js specific folders or API routes
+# which don't need to be indexed.
+Disallow: /api/
+Disallow: /_next/
+
+# Point crawlers to your sitemap
+Sitemap: https://bariqfirjatullah.my.id/sitemap.xml

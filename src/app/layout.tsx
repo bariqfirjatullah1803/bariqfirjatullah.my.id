@@ -80,9 +80,8 @@ export default function RootLayout({
       "SEO",
     ],
     sameAs: [
-      "https://www.linkedin.com/in/bariq-firjatullah/",
-      "https://github.com/bariqfirjatullah1803", // Tambahkan jika Anda punya GitHub
-      // "https://www.website-anda.com/blog", // Tambahkan jika punya blog
+      "https://www.linkedin.com/in/bariq-firjatullah",
+      "https://github.com/bariqfirjatullah1803",
     ],
   };
   return (
