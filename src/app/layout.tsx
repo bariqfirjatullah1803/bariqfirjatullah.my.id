@@ -2,6 +2,7 @@ import "@/styles/globals.css";
 
 import { type Metadata } from "next";
 import { Geist } from "next/font/google";
+import { GoogleAnalytics } from '@next/third-parties/google'
 
 import { TRPCReactProvider } from "@/trpc/react";
 import { ClerkProvider } from "@clerk/nextjs";
@@ -93,6 +94,7 @@ export default function RootLayout({
             dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
           />
           <TRPCReactProvider>{children}</TRPCReactProvider>
+          <GoogleAnalytics gaId="G-N11PP8KEM0" />
         </body>
       </html>
     </ClerkProvider>
