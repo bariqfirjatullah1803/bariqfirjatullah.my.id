@@ -15,10 +15,10 @@ const MotionWrap: React.FC<MotionWrapProps> = ({
 }) => {
   return (
     <motion.div
-      initial={{ y: 50, opacity: 0 }} // Posisi awal: 50px di bawah dan transparan
-      whileInView={{ y: 0, opacity: 1 }} // Posisi akhir: di tempatnya dan terlihat
-      viewport={{ once: true }} // Animasi hanya berjalan sekali
-      transition={{ duration: 0.5, delay }} // Durasi dan delay animasi
+      initial={{ y: 24, opacity: 0 }}
+      whileInView={{ y: 0, opacity: 1 }}
+      viewport={{ once: true, margin: "-40px" }}
+      transition={{ duration: 0.45, delay, ease: [0.22, 1, 0.36, 1] }}
       className={className}
     >
       {children}

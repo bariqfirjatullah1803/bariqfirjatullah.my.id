@@ -1,71 +1,52 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { FiGitBranch, FiDatabase, FiTerminal, FiMail } from "react-icons/fi";
 import {
-  FaReact,
-  FaNodeJs,
-  FaLaravel,
-  FaDocker,
-  FaGithub,
-} from "react-icons/fa";
-import {
-  SiNextdotjs,
-  SiRedis,
-  SiTailwindcss,
-  SiTypescript,
-  SiJavascript,
-  SiHtml5,
-  SiCss3,
-  SiNginx,
-  SiAmazon,
-  SiCloudflare,
-  SiHono,
-} from "react-icons/si";
-import { BiMenu, BiX } from "react-icons/bi";
-import { FaLinkedin, FaTwitter } from "react-icons/fa6";
+  FiMail,
+  FiPhone,
+  FiMapPin,
+  FiArrowUpRight,
+  FiDownload,
+} from "react-icons/fi";
+import { FaGithub, FaLinkedin } from "react-icons/fa";
 import MotionWrap from "@/app/_components/motion-wrap";
+import SectionHeader from "@/app/_components/section-header";
+import PortfolioNavbar from "@/app/_components/portfolio-navbar";
+import AboutSection from "@/app/_components/about-section";
+import {
+  heroPhrases,
+  heroTagline,
+  statusBadge,
+  projects,
+  experiences,
+  education,
+  certifications,
+  skillCategories,
+  contactInfo,
+  siteCopy,
+} from "@/app/_components/portfolio-data";
 
-interface Project {
-  id: number;
-  imageUrl: string;
-  title: string;
-  description: string;
-  backend: string;
-  frontend?: string;
-  devops: string;
-  githubUrl?: string;
-  demoUrl?: string;
-  docsUrl?: string;
-  liveUrl?: string;
-}
+type FormStatus = "idle" | "loading" | "success" | "error";
 
-interface Experience {
-  id: number;
-  title: string;
-  company: string;
-  period: string;
-  description: string;
-  technologies: string[];
-}
+const Tag = ({ children }: { children: React.ReactNode }) => (
+  <span className="rounded-md border border-brand-100 bg-brand-50 px-2.5 py-1 text-xs font-medium text-brand-700">
+    {children}
+  </span>
+);
 
-type Tech = {
-  name: string;
-  icon: React.JSX.Element;
-};
-
-interface TechStack {
-  backend: Tech[];
-  frontend: Tech[];
-  devops: Tech[];
-}
-
-const phrases = [
-  "Backend Engineer",
-  "Full-Stack Developer",
-  "DevOps Engineer",
-  "Software Engineer",
-];
+const Card = ({
+  children,
+  className = "",
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) => (
+  <div
+    className={`rounded-2xl border border-slate-200/80 bg-white p-6 shadow-[0_8px_30px_rgba(15,28,46,0.04)] md:p-8 ${className}`}
+  >
+    {children}
+  </div>
+);
 
 const PortfolioClient: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -73,178 +54,28 @@ const PortfolioClient: React.FC = () => {
   const [currentChar, setCurrentChar] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
   const [displayText, setDisplayText] = useState("");
-
-  const handleSubmit = () => {
-    console.log("submit");
-  };
-
-  const projects: Project[] = [
-    {
-      id: 1,
-      title: "Artiknesia - Art Marketplace",
-      imageUrl: "https://picsum.photos/200/300?random=1",
-      description:
-        "A full-stack e-commerce platform connecting artists with collectors. Features artist profiles, artwork galleries, and a secure transaction system.",
-      backend: "Laravel, MySQL",
-      frontend: "Tailwind CSS, Livewire",
-      devops: "CPanel",
-      liveUrl: "https://artiknesia.com/", // <-- Ganti dengan URL Demo Anda
-    },
-    {
-      id: 2,
-      title: "Karisma Academy - LMS",
-      imageUrl: "https://picsum.photos/200/300?random=2",
-      description:
-        "Designed and developed the core backend architecture for a bootcamp-style Learning Management System, handling course enrollment, materials, and student progress.",
-      backend: "MySQL, Hono.js",
-      frontend: "Next.js, Tailwind CSS",
-      devops: "Docker, Nginx, CI/CD (GitHub Actions)",
-      liveUrl: "https://karismaacademy.com/", // <-- Ganti dengan URL Demo Anda
-    },
-    {
-      id: 3,
-      title: "EntrepreneurID - E-commerce",
-      imageUrl: "https://picsum.photos/200/300?random=3",
-      description:
-        "A specialized e-commerce website for plumbing supplies. Developed full-stack, from product catalogs and cart functionality to order processing.",
-      backend: "Laravel, MySQL",
-      frontend: "React.js, Tailwind CSS",
-      devops: "CI/CD (GitHub Actions), CPanel",
-      liveUrl: "entrepreneurid.my.id", // <-- Ganti dengan URL Live Anda
-    },
-    {
-      id: 4,
-      title: "Istana Safira - Company Profile",
-      imageUrl: "https://picsum.photos/200/300?random=4",
-      description:
-        "An elegant and responsive company profile website for a real estate business in Malang. Showcases property types, galleries, and lead generation forms.",
-      backend: "Codeigniter, MySQL",
-      frontend: "Bootstrap",
-      devops: "CPanel", // Vercel sangat cocok untuk Next.js
-      liveUrl: "https://istanasafira.com/", // <-- Ganti dengan URL Live Anda
-    },
-    {
-      id: 5,
-      title: "Material Data Forecasting System",
-      imageUrl: "https://picsum.photos/200/300?random=5",
-      description:
-        "A full-stack application to forecast material requirements based on historical data. Features data input, processing, and visualization dashboards.",
-      backend: "Codeigniter, MySQL",
-      frontend: "Bootstrap",
-      devops: "CPanel",
-      githubUrl: "https://github.com/bariqfirjatullah1803/Aplikasi-Forecasting-Data-Bahan", // <-- Ganti dengan URL GitHub Anda
-    },
-    {
-      id: 6,
-      title: "Best Gym Malang - Membership Portal",
-      imageUrl: "https://picsum.photos/200/300?random=6",
-      description:
-        "A web portal for a local gym. Allows members to manage their subscriptions, view class schedules, and book sessions online, increasing engagement.",
-      backend: "Laravel, MySQL",
-      frontend: "React, Tailwind CSS",
-      devops: "CPanel",
-    },
-  ];
-
-  const experiences: Experience[] = [
-    {
-      id: 1,
-      title: "Instructor & Web Developer",
-      company: "PT. Karisma Garuda Mulia",
-      period: "Sep 2022 - Jul 2025",
-      description:
-        "Taught and mentored 50+ participants in web development. Managed server infrastructure (VPS), including Nginx configuration, Docker containerization, and CI/CD pipelines with GitHub Actions. Developed curriculum and built an internal course management application.",
-      technologies: ["Laravel", "React", "Docker", "Nginx", "CI/CD", "MySQL"],
-    },
-    {
-      id: 2,
-      title: "Data Entry",
-      company: "PT. Sicepat Express Indonesia",
-      period: "Sep 2021 - Sep 2022",
-      description:
-        "Managed and ensured the accuracy of package shipping data. Coordinated with the logistics team to expedite delivery processes and maintained data entry efficiency to improve operational productivity.",
-      technologies: [
-        "Data Management",
-        "Logistics Coordination",
-        "System Operations",
-      ],
-    },
-    {
-      id: 3,
-      title: "Web Developer",
-      company: "CV. RedLevl Mediatama",
-      period: "Dec 2019 - Dec 2020",
-      description:
-        "Developed and maintained company profile websites using PHP and CodeIgniter. Created SEO-optimized article content and implemented off-page SEO strategies through backlinking to improve search rankings.",
-      technologies: ["PHP", "CodeIgniter", "SEO", "Content Creation", "MySQL"],
-    },
-  ];
-
-  const techStack: TechStack = {
-    backend: [
-      { name: "Laravel", icon: <FaLaravel size={20} /> },
-      { name: "Node.js", icon: <FaNodeJs size={20} /> },
-      { name: "Hono.js", icon: <SiHono size={20} /> },
-      { name: "Express", icon: <FiGitBranch size={20} /> },
-      { name: "MySQL", icon: <FiDatabase size={20} /> },
-      { name: "Redis", icon: <SiRedis size={20} /> },
-    ],
-    frontend: [
-      { name: "React", icon: <FaReact size={20} /> },
-      { name: "Next.js", icon: <SiNextdotjs size={20} /> },
-      { name: "Tailwind CSS", icon: <SiTailwindcss size={20} /> },
-      { name: "JavaScript", icon: <SiJavascript size={20} /> },
-      { name: "TypeScript", icon: <SiTypescript size={20} /> },
-      {
-        name: "HTML5 & CSS3",
-        icon: (
-          <div style={{ display: "flex", gap: "2px" }}>
-            <SiHtml5 size={18} />
-            <SiCss3 size={18} />
-          </div>
-        ),
-      },
-    ],
-    devops: [
-      { name: "Docker", icon: <FaDocker size={20} /> },
-      { name: "Nginx", icon: <SiNginx size={20} /> },
-      { name: "CI/CD (GitHub Actions)", icon: <FaGithub size={20} /> },
-      { name: "AWS", icon: <SiAmazon size={20} /> },
-      { name: "Cloudflare", icon: <SiCloudflare size={20} /> },
-      { name: "Linux Server", icon: <FiTerminal size={20} /> },
-    ],
-  };
+  const [formStatus, setFormStatus] = useState<FormStatus>("idle");
 
   useEffect(() => {
-    const activePhrase = phrases[currentPhrase];
+    const activePhrase = heroPhrases[currentPhrase];
     if (!activePhrase) return;
 
     const timeout = setTimeout(
       () => {
-        // 1. Sedang mengetik (menambah karakter)
         if (!isDeleting && currentChar < activePhrase.length) {
           setCurrentChar((prev) => prev + 1);
           setDisplayText(activePhrase.substring(0, currentChar + 1));
-        }
-        // 2. Sedang menghapus (mengurangi karakter)
-        else if (isDeleting && currentChar > 0) {
+        } else if (isDeleting && currentChar > 0) {
           setCurrentChar((prev) => prev - 1);
           setDisplayText(activePhrase.substring(0, currentChar - 1));
-        }
-        // 3. Kondisi transisi (selesai mengetik atau selesai menghapus)
-        else {
-          // Hanya ganti frasa SETELAH selesai menghapus (currentChar === 0)
-          if (isDeleting && currentChar === 0) {
-            setIsDeleting(false); // Berhenti menghapus
-            setCurrentPhrase((prev) => (prev + 1) % phrases.length); // Pindah ke frasa berikutnya
-          }
-          // Jika tidak, berarti sudah selesai mengetik, maka mulai hapus
-          else {
-            setIsDeleting(true); // Mulai menghapus
-          }
+        } else if (isDeleting && currentChar === 0) {
+          setIsDeleting(false);
+          setCurrentPhrase((prev) => (prev + 1) % heroPhrases.length);
+        } else {
+          setIsDeleting(true);
         }
       },
-      isDeleting ? 50 : 100,
+      isDeleting ? 40 : 90,
     );
 
     return () => clearTimeout(timeout);
@@ -253,577 +84,571 @@ const PortfolioClient: React.FC = () => {
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
-      const offset = 80;
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - offset;
-
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: "smooth",
-      });
+      const offset = 72;
+      const top =
+        element.getBoundingClientRect().top + window.pageYOffset - offset;
+      window.scrollTo({ top, behavior: "smooth" });
     }
     setIsMobileMenuOpen(false);
   };
 
-  return (
-    <div className="min-h-screen bg-black text-gray-100">
-      {/* Navigation */}
-      <nav className="fixed z-50 w-full border-b border-gray-800 bg-black/70 backdrop-blur-md">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-          <div className="flex h-16 items-center justify-between">
-            <div className="flex items-center">
-              <span className="bg-gradient-to-r from-green-400 to-cyan-400 bg-clip-text font-mono text-xl font-bold text-transparent">
-                bariq@portfolio:~$
-              </span>
-            </div>
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setFormStatus("loading");
 
-            {/* Desktop Menu */}
-            <div className="hidden space-x-8 md:flex">
-              <button
-                onClick={() => scrollToSection("home")}
-                className="font-mono text-gray-300 transition hover:text-white"
-              >
-                ./home
-              </button>
-              <button
-                onClick={() => scrollToSection("about")}
-                className="font-mono text-gray-300 transition hover:text-white"
-              >
-                ./about
-              </button>
-              <button
-                onClick={() => scrollToSection("projects")}
-                className="font-mono text-gray-300 transition hover:text-white"
-              >
-                ./projects
-              </button>
-              <button
-                onClick={() => scrollToSection("tech")}
-                className="font-mono text-gray-300 transition hover:text-white"
-              >
-                ./tech
-              </button>
-              <button
-                onClick={() => scrollToSection("experience")}
-                className="font-mono text-gray-300 transition hover:text-white"
-              >
-                ./experience
-              </button>
-              <button
-                onClick={() => scrollToSection("contact")}
-                className="font-mono text-gray-300 transition hover:text-white"
-              >
-                ./contact
-              </button>
-            </div>
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+    const name = formData.get("name");
+    const email = formData.get("email");
+    const message = formData.get("message");
 
-            {/* Mobile Menu Button */}
-            <div className="md:hidden">
-              <button
-                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="text-gray-300 hover:text-white focus:outline-none"
-              >
-                {isMobileMenuOpen ? <BiX size={24} /> : <BiMenu size={24} />}
-              </button>
+    if (
+      typeof name !== "string" ||
+      typeof email !== "string" ||
+      typeof message !== "string"
+    ) {
+      setFormStatus("error");
+      return;
+    }
+
+    try {
+      const response = await fetch(
+        `https://formsubmit.co/ajax/${contactInfo.email}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify({
+            name,
+            email,
+            message,
+            _subject: `Portfolio inquiry from ${name}`,
+            _template: "table",
+          }),
+        },
+      );
+
+      if (!response.ok) throw new Error("Failed to send");
+
+      setFormStatus("success");
+      form.reset();
+    } catch {
+      const subject = encodeURIComponent(`Portfolio inquiry from ${name}`);
+      const body = encodeURIComponent(
+        `Name: ${name}\nEmail: ${email}\n\n${message}`,
+      );
+      window.location.href = `mailto:${contactInfo.email}?subject=${subject}&body=${body}`;
+      setFormStatus("idle");
+    }
+  };
+
+  const renderProjectCard = (project: (typeof projects)[0]) => (
+    <Card key={project.id} className="flex h-full flex-col">
+      <div className="mb-4 flex items-start justify-between gap-3">
+        <div>
+          {project.category && (
+            <div className="mb-2">
+              <Tag>{project.category}</Tag>
             </div>
-          </div>
+          )}
+          <h3 className="font-display text-xl font-semibold text-ink">
+            {project.title}
+          </h3>
+          {project.company && (
+            <p className="mt-1 text-sm text-ink-muted">{project.company}</p>
+          )}
         </div>
-
-        {/* Mobile Menu */}
-        {isMobileMenuOpen && (
-          <div className="border-b border-gray-800 bg-black/95 px-4 pb-4 backdrop-blur-md md:hidden">
-            <div className="flex flex-col space-y-2">
-              <button
-                onClick={() => scrollToSection("home")}
-                className="py-2 text-left font-mono text-gray-300 transition hover:text-white"
-              >
-                ./home
-              </button>
-              <button
-                onClick={() => scrollToSection("about")}
-                className="py-2 text-left font-mono text-gray-300 transition hover:text-white"
-              >
-                ./about
-              </button>
-              <button
-                onClick={() => scrollToSection("projects")}
-                className="py-2 text-left font-mono text-gray-300 transition hover:text-white"
-              >
-                ./projects
-              </button>
-              <button
-                onClick={() => scrollToSection("tech")}
-                className="py-2 text-left font-mono text-gray-300 transition hover:text-white"
-              >
-                ./tech
-              </button>
-              <button
-                onClick={() => scrollToSection("experience")}
-                className="py-2 text-left font-mono text-gray-300 transition hover:text-white"
-              >
-                ./experience
-              </button>
-              <button
-                onClick={() => scrollToSection("contact")}
-                className="py-2 text-left font-mono text-gray-300 transition hover:text-white"
-              >
-                ./contact
-              </button>
-            </div>
-          </div>
+        <span className="shrink-0 text-xs font-medium text-ink-muted/80">
+          {project.period}
+        </span>
+      </div>
+      <p className="mb-5 text-sm leading-relaxed text-ink-muted">
+        {project.description}
+      </p>
+      <ul className="mb-5 space-y-2 text-sm text-ink-muted">
+        {project.responsibilities.slice(0, 3).map((item) => (
+          <li key={item} className="flex gap-3">
+            <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-brand-500" />
+            <span>{item}</span>
+          </li>
+        ))}
+      </ul>
+      <p className="mb-4 text-xs text-ink-muted/70">Team: {project.teamSize}</p>
+      <div className="mt-auto flex flex-wrap items-center gap-2">
+        {project.tools.slice(0, 5).map((tool) => (
+          <Tag key={tool}>{tool}</Tag>
+        ))}
+        {project.tools.length > 5 && (
+          <span className="text-xs text-ink-muted">
+            +{project.tools.length - 5} more
+          </span>
         )}
-      </nav>
+        {project.liveUrl && (
+          <a
+            href={project.liveUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="ml-auto inline-flex items-center gap-1 text-sm font-semibold text-brand-700 transition hover:text-brand-600"
+          >
+            Visit
+            <FiArrowUpRight size={14} />
+          </a>
+        )}
+      </div>
+    </Card>
+  );
 
-      {/* Hero Section */}
-      <section id="home" className="flex min-h-screen items-center pt-16">
-        <div className="mx-auto w-5xl px-4 py-20 sm:px-6 lg:px-8">
-          <div className="rounded-xl border border-gray-700 bg-gray-950/70 p-8 backdrop-blur-md md:p-12">
-            <div className="mb-4 font-mono text-green-400">$ whoami</div>
-            <h1 className="mb-4 text-4xl font-bold md:text-6xl">
+  return (
+    <div className="min-h-screen bg-surface-muted text-ink">
+      <PortfolioNavbar
+        isOpen={isMobileMenuOpen}
+        onToggle={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+        onNavigate={scrollToSection}
+        cvUrl={contactInfo.cvUrl}
+        linkedinUrl={contactInfo.linkedin}
+      />
+
+      <section
+        id="home"
+        className="relative overflow-hidden border-b border-slate-200/70 bg-white pt-16"
+      >
+        <div className="pointer-events-none absolute -top-24 right-0 h-72 w-72 rounded-full bg-brand-100/60 blur-3xl" />
+        <div className="pointer-events-none absolute bottom-0 left-0 h-56 w-56 rounded-full bg-slate-100 blur-3xl" />
+
+        <div className="relative mx-auto max-w-6xl px-5 py-20 sm:px-8 lg:py-28">
+          <div className="max-w-3xl">
+            <span className="mb-5 inline-flex items-center gap-2 rounded-full border border-brand-200 bg-brand-50 px-3 py-1 text-xs font-semibold text-brand-700">
+              <span className="h-1.5 w-1.5 rounded-full bg-brand-500" />
+              {statusBadge}
+            </span>
+
+            <h1 className="font-display mb-4 text-5xl leading-[1.05] font-semibold text-ink md:text-6xl lg:text-7xl">
               Bariq Firjatullah
             </h1>
-            <div className="mb-6 text-2xl font-semibold md:text-3xl">
-              <span className="bg-gradient-to-r from-green-400 to-cyan-400 bg-clip-text text-transparent">
-                {/* Ganti dengan state animasi Anda, misal: "Full-Stack Developer" */}
-                {displayText}
-              </span>
-              <span className="ml-1 inline-block h-6 w-2 animate-pulse bg-green-400"></span>
-              <span className="text-gray-400"> | </span>
-              <span className="text-gray-300">
-                Full-Stack & DevOps Enthusiast
-              </span>
-            </div>
-            <p className="mb-8 max-w-2xl text-lg text-gray-300">
-              I build scalable web applications and manage the entire
-              development lifecycle, from teaching and curriculum development to
-              deploying and maintaining server infrastructure with Docker,
-              Nginx, and CI/CD.
+            <p className="mb-5 text-xl font-medium text-brand-700 md:text-2xl">
+              {displayText}
+              <span className="ml-0.5 inline-block h-6 w-0.5 animate-pulse bg-brand-500 align-middle" />
             </p>
-            <div className="flex flex-wrap gap-4">
-              <button
-                onClick={() => scrollToSection("projects")}
-                className="rounded bg-gradient-to-r from-green-400 to-cyan-400 px-6 py-3 font-mono font-bold text-black transition hover:opacity-90"
+            <p className="mb-8 max-w-2xl text-base leading-relaxed text-ink-muted md:text-lg">
+              {heroTagline}
+            </p>
+
+            <div className="mb-8 flex flex-wrap gap-3">
+              <a
+                href={contactInfo.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-full bg-brand-700 px-6 py-3 text-sm font-semibold text-white transition hover:bg-brand-600"
               >
-                view_projects.sh
-              </button>
+                <FaLinkedin size={16} />
+                Connect on LinkedIn
+              </a>
+              <a
+                href={contactInfo.cvUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-full border border-slate-300 bg-white px-6 py-3 text-sm font-semibold text-ink transition hover:border-brand-200 hover:bg-brand-50"
+              >
+                <FiDownload size={16} />
+                Download CV
+              </a>
               <button
                 onClick={() => scrollToSection("contact")}
-                className="rounded border border-gray-600 px-6 py-3 font-mono font-bold text-gray-300 transition hover:bg-gray-950"
+                className="inline-flex items-center rounded-full border border-slate-300 bg-white px-6 py-3 text-sm font-semibold text-ink transition hover:border-brand-200 hover:bg-brand-50"
               >
-                contact_me.sh
+                Send a Message
               </button>
+            </div>
+
+            <div className="flex flex-wrap gap-x-5 gap-y-2 text-sm text-ink-muted">
+              <a
+                href={contactInfo.phoneHref}
+                className="inline-flex items-center gap-2 transition hover:text-brand-700"
+              >
+                <FiPhone size={15} />
+                {contactInfo.phone}
+              </a>
+              <a
+                href={`mailto:${contactInfo.email}`}
+                className="inline-flex items-center gap-2 transition hover:text-brand-700"
+              >
+                <FiMail size={15} />
+                {contactInfo.email}
+              </a>
+              <span className="inline-flex items-center gap-2">
+                <FiMapPin size={15} />
+                {contactInfo.location}
+              </span>
             </div>
           </div>
         </div>
       </section>
 
-      {/* About Section */}
+      <AboutSection />
+
       <MotionWrap>
-        <section id="about" className="py-20">
-          <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-            <h2 className="mb-2 font-mono text-3xl font-bold text-gray-300">
-              ./about
-            </h2>
-            <div className="mb-8 h-1 w-20 bg-gradient-to-r from-green-400 to-cyan-400"></div>
-
-            <div className="grid items-center gap-12 rounded-xl border border-gray-700 bg-gray-950/70 p-8 backdrop-blur-md md:grid-cols-2 md:p-12">
-              <div>
-                <h3 className="mb-4 bg-gradient-to-r from-green-400 to-cyan-400 bg-clip-text text-2xl font-bold text-transparent">
-                  Developer & Instructor
-                </h3>
-                <p className="mb-4 text-gray-300">
-                  My journey in technology is driven by a passion for both
-                  building and teaching. As a developer, I specialize in
-                  creating robust full-stack applications. As an instructor, I
-                  enjoy breaking down complex concepts to help others grow.
-                </p>
-                <p className="mb-4 text-gray-300">
-                  This dual role gives me a unique perspective, allowing me to
-                  understand technology at a fundamental level while staying
-                  focused on practical, real-world applications and efficient
-                  development workflows.
-                </p>
-                <p className="text-gray-300">
-                  When I&#39;m not coding or teaching, I&#39;m exploring new
-                  DevOps tools, contributing to open-source, or documenting my
-                  learning journey.
-                </p>
-              </div>
-
-              <div className="relative">
-                <div className="absolute -inset-4 rounded-xl bg-gradient-to-r from-green-400 to-cyan-400 opacity-20 blur"></div>
-                <div className="relative rounded-xl border border-gray-700 bg-gray-950/70 p-6 backdrop-blur-md">
-                  <div className="mb-2 font-mono text-sm text-gray-400">
-                    # core_stack.txt
+        <section
+          id="experience"
+          className="border-y border-slate-200/70 bg-white py-24"
+        >
+          <div className="mx-auto max-w-6xl px-5 sm:px-8">
+            <SectionHeader
+              label={siteCopy.experience.label}
+              title={siteCopy.experience.title}
+              description={siteCopy.experience.description}
+            />
+            <div className="relative space-y-0">
+              {experiences.map((exp, index) => (
+                <div
+                  key={exp.id}
+                  className="relative grid gap-4 border-l-2 border-brand-100 py-8 pl-8 md:grid-cols-[180px_1fr] md:gap-8 md:pl-10"
+                >
+                  <span className="absolute top-10 left-0 h-3 w-3 -translate-x-[7px] rounded-full border-2 border-white bg-brand-600" />
+                  {index < experiences.length - 1 && (
+                    <span className="absolute top-10 left-0 h-full w-0.5 -translate-x-px bg-brand-100" />
+                  )}
+                  <div>
+                    <p className="text-sm font-semibold text-brand-700">
+                      {exp.period}
+                    </p>
                   </div>
-                  <div className="space-y-3">
-                    {[
-                      "TypeScript & Node.js",
-                      "React.js & Next.js",
-                      "PHP (Laravel)",
-                      "Docker & Nginx",
-                      "CI/CD (GitHub Actions)",
-                      "SQL & Database Management",
-                    ].map((skill, index) => (
-                      <div key={index} className="flex items-center">
-                        <div className="mr-2 h-3 w-3 rounded-full bg-green-400"></div>
-                        <span className="text-gray-300">{skill}</span>
-                      </div>
-                    ))}
-                  </div>
+                  <Card className="p-6 md:p-7">
+                    <h3 className="font-display text-xl font-semibold text-ink">
+                      {exp.title}
+                    </h3>
+                    <p className="mt-1 text-sm font-medium text-brand-600">
+                      {exp.company}
+                    </p>
+                    <ul className="mt-4 space-y-2.5 text-sm leading-relaxed text-ink-muted">
+                      {exp.bullets.map((bullet) => (
+                        <li key={bullet} className="flex gap-3">
+                          <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-brand-400" />
+                          <span>{bullet}</span>
+                        </li>
+                      ))}
+                    </ul>
+                    <div className="mt-5 flex flex-wrap gap-2">
+                      {exp.technologies.map((tech) => (
+                        <Tag key={tech}>{tech}</Tag>
+                      ))}
+                    </div>
+                  </Card>
                 </div>
-              </div>
+              ))}
             </div>
           </div>
         </section>
       </MotionWrap>
 
-      {/* Projects Section */}
-      <section id="projects" className="py-20">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+      <MotionWrap>
+        <section id="skills" className="py-24">
+          <div className="mx-auto max-w-6xl px-5 sm:px-8">
+            <SectionHeader
+              label={siteCopy.skills.label}
+              title={siteCopy.skills.title}
+              description={siteCopy.skills.description}
+            />
+            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+              {skillCategories.map((category) => (
+                <Card key={category.name}>
+                  <h3 className="mb-4 font-display text-lg font-semibold text-ink">
+                    {category.name}
+                  </h3>
+                  <div className="flex flex-wrap gap-2">
+                    {category.skills.map((skill) => (
+                      <Tag key={skill}>{skill}</Tag>
+                    ))}
+                  </div>
+                </Card>
+              ))}
+            </div>
+          </div>
+        </section>
+      </MotionWrap>
+
+      <section
+        id="projects"
+        className="border-y border-slate-200/70 bg-white py-24"
+      >
+        <div className="mx-auto max-w-6xl px-5 sm:px-8">
           <MotionWrap>
-            <h2 className="mb-2 font-mono text-3xl font-bold text-gray-300">
-              ./projects
-            </h2>
-            <div className="mb-8 h-1 w-20 bg-gradient-to-r from-green-400 to-cyan-400"></div>
+            <SectionHeader
+              label={siteCopy.projects.label}
+              title={siteCopy.projects.title}
+              description={siteCopy.projects.description}
+            />
           </MotionWrap>
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-5 md:grid-cols-2">
             {projects.map((project, index) => (
-              <MotionWrap key={project.id} delay={index * 0.1}>
-                <div className="h-full rounded-xl border border-gray-700 bg-gray-800/70 p-6 backdrop-blur-md transition duration-300 hover:-translate-y-1 hover:transform hover:shadow-lg hover:shadow-green-400/10">
-                  <div className="mb-4 flex items-center">
-                    <h3 className="bg-gradient-to-r from-green-400 to-cyan-400 bg-clip-text text-xl font-bold text-transparent">
-                      {project.title}
-                    </h3>
-                  </div>
-                  <p className="mb-4 text-gray-300">{project.description}</p>
-                  <div className="mb-4 space-y-1 font-mono text-xs text-gray-400">
-                    <div>
-                      <span className="text-green-400">Backend:</span>{" "}
-                      {project.backend}
-                    </div>
-                    {project.frontend && (
-                      <div>
-                        <span className="text-cyan-400">Frontend:</span>{" "}
-                        {project.frontend}
-                      </div>
-                    )}
-                    <div>
-                      <span className="text-purple-400">DevOps:</span>{" "}
-                      {project.devops}
-                    </div>
-                  </div>
-                  <div className="flex flex-wrap gap-2 space-x-3">
-                    {project.githubUrl && (
-                      <a
-                        href={project.githubUrl}
-                        className="rounded bg-gray-800 px-3 py-1 font-mono text-xs transition hover:bg-gray-700"
-                      >
-                        github
-                      </a>
-                    )}
-                    {project.demoUrl && (
-                      <a
-                        href={project.demoUrl}
-                        className="rounded bg-gray-800 px-3 py-1 font-mono text-xs transition hover:bg-gray-700"
-                      >
-                        demo
-                      </a>
-                    )}
-                    {project.docsUrl && (
-                      <a
-                        href={project.docsUrl}
-                        className="rounded bg-gray-800 px-3 py-1 font-mono text-xs transition hover:bg-gray-700"
-                      >
-                        docs
-                      </a>
-                    )}
-                    {project.liveUrl && (
-                      <a
-                        href={project.liveUrl}
-                        className="rounded bg-gray-800 px-3 py-1 font-mono text-xs transition hover:bg-gray-700"
-                      >
-                        live
-                      </a>
-                    )}
-                  </div>
-                </div>
+              <MotionWrap key={project.id} delay={index * 0.04}>
+                {renderProjectCard(project)}
               </MotionWrap>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Tech Stack Section */}
       <MotionWrap>
-        <section id="tech" className="py-20">
-          <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-            <h2 className="mb-2 font-mono text-3xl font-bold text-gray-300">
-              ./tech_stack
-            </h2>
-            <div className="mb-8 h-1 w-20 bg-gradient-to-r from-green-400 to-cyan-400"></div>
-
-            <div className="rounded-xl border border-gray-700 bg-gray-950/70 p-8 backdrop-blur-md">
-              <div className="grid gap-8 md:grid-cols-3">
-                {/* Kolom Backend */}
-                <div>
-                  <h3 className="mb-6 bg-gradient-to-r from-green-400 to-cyan-400 bg-clip-text font-mono text-xl font-bold text-transparent">
-                    Backend
-                  </h3>
-                  <div className="space-y-4">
-                    {techStack.backend.map((tech) => (
-                      <div key={tech.name} className="flex items-center gap-3">
-                        <span className="text-green-400">{tech.icon}</span>
-                        <span className="text-gray-300">{tech.name}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Kolom Frontend */}
-                <div>
-                  <h3 className="mb-6 bg-gradient-to-r from-green-400 to-cyan-400 bg-clip-text font-mono text-xl font-bold text-transparent">
-                    Frontend
-                  </h3>
-                  <div className="space-y-4">
-                    {techStack.frontend.map((tech) => (
-                      <div key={tech.name} className="flex items-center gap-3">
-                        <span className="text-cyan-400">{tech.icon}</span>
-                        <span className="text-gray-300">{tech.name}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Kolom DevOps */}
-                <div>
-                  <h3 className="mb-6 bg-gradient-to-r from-green-400 to-cyan-400 bg-clip-text font-mono text-xl font-bold text-transparent">
-                    DevOps
-                  </h3>
-                  <div className="space-y-4">
-                    {techStack.devops.map((tech) => (
-                      <div key={tech.name} className="flex items-center gap-3">
-                        <span className="text-purple-400">{tech.icon}</span>
-                        <span className="text-gray-300">{tech.name}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-      </MotionWrap>
-
-      {/* Experience Section */}
-      <MotionWrap>
-        <section id="experience" className="py-20">
-          <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-            <h2 className="mb-2 font-mono text-3xl font-bold text-gray-300">
-              ./experience
-            </h2>
-            <div className="mb-8 h-1 w-20 bg-gradient-to-r from-green-400 to-cyan-400"></div>
-
-            <div className="rounded-xl border border-gray-700 bg-gray-950/70 p-8 backdrop-blur-md">
-              <div className="space-y-8">
-                {experiences.map((exp, index) => (
-                  <div key={exp.id} className="relative pl-8">
-                    <div className="absolute top-0 left-0 h-4 w-4 -translate-x-1/2 transform rounded-full bg-gradient-to-r from-green-400 to-cyan-400"></div>
-                    {index < experiences.length - 1 && (
-                      <div className="absolute top-4 left-0 h-full w-0.5 -translate-x-1/2 transform bg-gradient-to-b from-green-400 to-cyan-400"></div>
-                    )}
-                    <div className="mb-2 flex flex-col md:flex-row md:items-center md:justify-between">
-                      <h3 className="bg-gradient-to-r from-green-400 to-cyan-400 bg-clip-text text-xl font-bold text-transparent">
-                        {exp.title}
-                      </h3>
-                      <div className="font-mono text-sm text-gray-400">
-                        {exp.period}
-                      </div>
+        <section id="education" className="py-24">
+          <div className="mx-auto max-w-6xl px-5 sm:px-8">
+            <SectionHeader
+              label={siteCopy.education.label}
+              title={siteCopy.education.title}
+              description={siteCopy.education.description}
+            />
+            <div className="grid gap-5 md:grid-cols-2">
+              <Card>
+                <h3 className="mb-6 text-sm font-semibold tracking-wide text-brand-600 uppercase">
+                  Education
+                </h3>
+                {education.map((edu) => (
+                  <div key={edu.id}>
+                    <div className="flex flex-col justify-between gap-1 md:flex-row md:items-center">
+                      <h4 className="font-display text-lg font-semibold text-ink">
+                        {edu.school}
+                      </h4>
+                      <span className="text-sm text-ink-muted">
+                        {edu.period}
+                      </span>
                     </div>
-                    <div className="mb-2 font-mono text-sm text-cyan-400">
-                      {exp.company}
-                    </div>
-                    <p className="mb-3 text-gray-300">{exp.description}</p>
-                    <div className="flex flex-wrap gap-2">
-                      {exp.technologies.map((tech, techIndex) => (
-                        <span
-                          key={techIndex}
-                          className="rounded bg-gray-950 px-2 py-1 font-mono text-xs"
-                        >
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
+                    <p className="mt-1 text-sm text-ink-muted">{edu.degree}</p>
                   </div>
                 ))}
-              </div>
+              </Card>
+              <Card>
+                <h3 className="mb-6 text-sm font-semibold tracking-wide text-brand-600 uppercase">
+                  Certifications
+                </h3>
+                <div className="space-y-5">
+                  {certifications.map((cert) => (
+                    <div
+                      key={cert.id}
+                      className="flex items-start justify-between gap-4 border-b border-slate-100 pb-5 last:border-0 last:pb-0"
+                    >
+                      <div>
+                        <h4 className="font-medium text-ink">{cert.name}</h4>
+                        <p className="mt-1 text-sm text-ink-muted">
+                          {cert.issuer}
+                        </p>
+                      </div>
+                      <span className="shrink-0 rounded-full bg-brand-50 px-3 py-1 text-xs font-semibold text-brand-700">
+                        {cert.year}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </Card>
             </div>
           </div>
         </section>
       </MotionWrap>
 
-      {/* Contact Section */}
       <MotionWrap>
-        <section id="contact" className="py-20">
-          <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-            <h2 className="mb-2 font-mono text-3xl font-bold text-gray-300">
-              ./contact
-            </h2>
-            <div className="mb-8 h-1 w-20 bg-gradient-to-r from-green-400 to-cyan-400"></div>
-
-            <div className="grid gap-12 rounded-xl border border-gray-700 bg-gray-950/70 p-8 backdrop-blur-md md:grid-cols-2 md:p-12">
-              <div>
-                <h3 className="mb-4 bg-gradient-to-r from-green-400 to-cyan-400 bg-clip-text text-2xl font-bold text-transparent">
-                  Get in Touch
+        <section
+          id="contact"
+          className="border-t border-slate-200/70 bg-gradient-to-b from-brand-50/40 to-surface-muted py-24 pb-32"
+        >
+          <div className="mx-auto max-w-6xl px-5 sm:px-8">
+            <SectionHeader
+              label={siteCopy.contact.label}
+              title={siteCopy.contact.title}
+              description={siteCopy.contact.description}
+              align="center"
+            />
+            <div className="grid gap-6 lg:grid-cols-5">
+              <Card className="lg:col-span-2">
+                <h3 className="mb-6 font-display text-xl font-semibold text-ink">
+                  Reach me directly
                 </h3>
-                <p className="mb-6 text-gray-300">
-                  Interested in collaborating or have questions about my work?
-                  Feel free to reach out through any of the channels below.
-                </p>
-
-                <div className="space-y-4">
-                  <div className="flex items-center">
-                    <div className="mr-4 flex h-10 w-10 items-center justify-center rounded-full bg-gray-950">
-                      <FiMail className="text-green-400" size={20} />
-                    </div>
-                    <div>
-                      <div className="font-mono text-xs text-gray-400">
-                        Email
+                <div className="space-y-5">
+                  {[
+                    {
+                      icon: <FaLinkedin size={18} />,
+                      label: "LinkedIn",
+                      value: "linkedin.com/in/bariq-firjatullah",
+                      href: contactInfo.linkedin,
+                    },
+                    {
+                      icon: <FiMail size={18} />,
+                      label: "Email",
+                      value: contactInfo.email,
+                      href: `mailto:${contactInfo.email}`,
+                    },
+                    {
+                      icon: <FiPhone size={18} />,
+                      label: "Phone",
+                      value: contactInfo.phone,
+                      href: contactInfo.phoneHref,
+                    },
+                    {
+                      icon: <FiDownload size={18} />,
+                      label: "CV / Resume",
+                      value: "Download PDF",
+                      href: contactInfo.cvUrl,
+                    },
+                    {
+                      icon: <FaGithub size={18} />,
+                      label: "GitHub",
+                      value: "github.com/bariqfirjatullah1803",
+                      href: contactInfo.github,
+                    },
+                    {
+                      icon: <FiMapPin size={18} />,
+                      label: "Location",
+                      value: contactInfo.location,
+                    },
+                  ].map((item) => (
+                    <div key={item.label} className="flex items-start gap-4">
+                      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-brand-50 text-brand-700">
+                        {item.icon}
                       </div>
-                      <a
-                        href="mailto:bariqfirjatullah1803@gmail.com"
-                        className="text-gray-300 transition hover:text-white"
-                      >
-                        bariqfirjatullah1803@gmail.com
-                      </a>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center">
-                    <div className="mr-4 flex h-10 w-10 items-center justify-center rounded-full bg-gray-950">
-                      <FaGithub className="text-green-400" size={20} />
-                    </div>
-                    <div>
-                      <div className="font-mono text-xs text-gray-400">
-                        GitHub
+                      <div>
+                        <p className="text-xs font-semibold tracking-wide text-ink-muted uppercase">
+                          {item.label}
+                        </p>
+                        {item.href ? (
+                          <a
+                            href={item.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="mt-0.5 text-sm font-medium text-ink transition hover:text-brand-700"
+                          >
+                            {item.value}
+                          </a>
+                        ) : (
+                          <p className="mt-0.5 text-sm font-medium text-ink">
+                            {item.value}
+                          </p>
+                        )}
                       </div>
-                      <a
-                        href="https://github.com/bariqfirjatullah1803"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-gray-300 transition hover:text-white"
-                      >
-                        github.com/bariqfirjatullah1803
-                      </a>
                     </div>
-                  </div>
-
-                  <div className="flex items-center">
-                    <div className="mr-4 flex h-10 w-10 items-center justify-center rounded-full bg-gray-950">
-                      <FaLinkedin className="text-green-400" size={20} />
-                    </div>
-                    <div>
-                      <div className="font-mono text-xs text-gray-400">
-                        LinkedIn
-                      </div>
-                      <a
-                        href="https://linkedin.com/in/bariq-firjatullah"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-gray-300 transition hover:text-white"
-                      >
-                        linkedin.com/in/bariq-firjatullah
-                      </a>
-                    </div>
-                  </div>
+                  ))}
                 </div>
-              </div>
+              </Card>
 
-              <div>
-                <form onSubmit={handleSubmit} className="space-y-4">
-                  <div>
+              <Card className="lg:col-span-3">
+                <h3 className="mb-6 font-display text-xl font-semibold text-ink">
+                  Send a message
+                </h3>
+                <form
+                  onSubmit={handleSubmit}
+                  className="grid gap-4 sm:grid-cols-2"
+                >
+                  <div className="sm:col-span-1">
                     <label
                       htmlFor="name"
-                      className="mb-1 block font-mono text-sm text-gray-400"
+                      className="mb-1.5 block text-sm font-medium text-ink"
                     >
                       Name
                     </label>
                     <input
                       type="text"
                       id="name"
-                      className="w-full rounded border border-gray-700 bg-gray-950 px-4 py-2 text-white focus:border-transparent focus:ring-2 focus:ring-green-400 focus:outline-none"
+                      name="name"
+                      className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-ink outline-none transition focus:border-brand-300 focus:bg-white focus:ring-2 focus:ring-brand-100"
                       placeholder="Your name"
                       required
+                      disabled={formStatus === "loading"}
                     />
                   </div>
-
-                  <div>
+                  <div className="sm:col-span-1">
                     <label
                       htmlFor="email"
-                      className="mb-1 block font-mono text-sm text-gray-400"
+                      className="mb-1.5 block text-sm font-medium text-ink"
                     >
                       Email
                     </label>
                     <input
                       type="email"
                       id="email"
-                      className="w-full rounded border border-gray-700 bg-gray-950 px-4 py-2 text-white focus:border-transparent focus:ring-2 focus:ring-green-400 focus:outline-none"
+                      name="email"
+                      className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-ink outline-none transition focus:border-brand-300 focus:bg-white focus:ring-2 focus:ring-brand-100"
                       placeholder="your@email.com"
                       required
+                      disabled={formStatus === "loading"}
                     />
                   </div>
-
-                  <div>
+                  <div className="sm:col-span-2">
                     <label
                       htmlFor="message"
-                      className="mb-1 block font-mono text-sm text-gray-400"
+                      className="mb-1.5 block text-sm font-medium text-ink"
                     >
                       Message
                     </label>
                     <textarea
                       id="message"
+                      name="message"
                       rows={4}
-                      className="w-full rounded border border-gray-700 bg-gray-950 px-4 py-2 text-white focus:border-transparent focus:ring-2 focus:ring-green-400 focus:outline-none"
-                      placeholder="Your message"
+                      className="w-full resize-none rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-ink outline-none transition focus:border-brand-300 focus:bg-white focus:ring-2 focus:ring-brand-100"
+                      placeholder="Tell me about the role, project, or opportunity..."
                       required
+                      disabled={formStatus === "loading"}
                     />
                   </div>
-
-                  <button
-                    type="submit"
-                    className="rounded bg-gradient-to-r from-green-400 to-cyan-400 px-6 py-3 font-mono font-bold text-black transition hover:opacity-90"
-                  >
-                    send_message.sh
-                  </button>
+                  <div className="sm:col-span-2">
+                    <button
+                      type="submit"
+                      disabled={formStatus === "loading"}
+                      className="w-full rounded-full bg-brand-700 px-6 py-3.5 text-sm font-semibold text-white transition hover:bg-brand-600 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
+                    >
+                      {formStatus === "loading"
+                        ? "Sending..."
+                        : "Send Message"}
+                    </button>
+                    {formStatus === "success" && (
+                      <p className="mt-3 text-sm font-medium text-emerald-600">
+                        Message sent! I&apos;ll get back to you soon.
+                      </p>
+                    )}
+                    {formStatus === "error" && (
+                      <p className="mt-3 text-sm font-medium text-red-600">
+                        Something went wrong. Please email me directly at{" "}
+                        <a
+                          href={`mailto:${contactInfo.email}`}
+                          className="underline"
+                        >
+                          {contactInfo.email}
+                        </a>
+                      </p>
+                    )}
+                  </div>
                 </form>
-              </div>
+              </Card>
             </div>
           </div>
         </section>
       </MotionWrap>
 
-      {/* Footer */}
-      <footer className="mt-20 border-t border-gray-700 bg-gray-950/70 py-8 backdrop-blur-md">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col items-center justify-between md:flex-row">
-            <div className="mb-4 font-mono text-gray-400 md:mb-0">
-              $ echo &#34;© 2023 Bariq Firjatullah. All systems
-              operational.&#34;
-            </div>
-            <div className="flex space-x-4">
-              <a href="#" className="text-gray-400 transition hover:text-white">
-                <FaGithub size={20} />
-              </a>
-              <a href="#" className="text-gray-400 transition hover:text-white">
-                <FaLinkedin size={20} />
-              </a>
-              <a href="#" className="text-gray-400 transition hover:text-white">
-                <FaTwitter size={20} />
-              </a>
-              <a href="#" className="text-gray-400 transition hover:text-white">
-                <FiMail size={20} />
-              </a>
-            </div>
+      <footer className="border-t border-slate-200 bg-white py-8">
+        <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-5 sm:flex-row sm:px-8">
+          <p className="text-sm text-ink-muted">
+            © 2026 Bariq Firjatullah · Full-Stack Developer · Malang, Indonesia
+          </p>
+          <div className="flex gap-4">
+            <a
+              href={contactInfo.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-ink-muted transition hover:text-brand-700"
+            >
+              <FaLinkedin size={18} />
+            </a>
+            <a
+              href={contactInfo.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-ink-muted transition hover:text-brand-700"
+            >
+              <FaGithub size={18} />
+            </a>
+            <a
+              href={`mailto:${contactInfo.email}`}
+              className="text-ink-muted transition hover:text-brand-700"
+            >
+              <FiMail size={18} />
+            </a>
           </div>
         </div>
       </footer>

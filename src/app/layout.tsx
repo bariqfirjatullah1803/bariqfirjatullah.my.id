@@ -1,102 +1,95 @@
 import "@/styles/globals.css";
 
-import { type Metadata } from "next";
-import { Geist } from "next/font/google";
-import { GoogleAnalytics } from '@next/third-parties/google'
+import { type Metadata, type Viewport } from "next";
+import { DM_Sans, Source_Serif_4 } from "next/font/google";
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 import { TRPCReactProvider } from "@/trpc/react";
-import { ClerkProvider } from "@clerk/nextjs";
 import React from "react";
+import { personJsonLd, siteConfig } from "@/lib/seo";
+
+export const viewport: Viewport = {
+  themeColor: "#156570",
+  width: "device-width",
+  initialScale: 1,
+  colorScheme: "light",
+};
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://bariqfirjatullah.my.id"),
-  title: "Bariq Firjatullah | Full-Stack Developer & DevOps Engineer",
-  description:
-    "Portofolio Bariq Firjatullah, seorang Web Developer dan Instruktur dengan pengalaman lebih dari 3 tahun dalam Full-Stack Development (TypeScript, Node.js, PHP/Laravel, React) dan manajemen infrastruktur (Docker, Nginx, CI/CD). Siap untuk proyek menantang berikutnya.",
+  metadataBase: new URL(siteConfig.url),
+  title: {
+    default: siteConfig.title,
+    template: `%s | ${siteConfig.shortTitle}`,
+  },
+  description: siteConfig.description,
+  applicationName: siteConfig.shortTitle,
+  authors: [{ name: siteConfig.name, url: siteConfig.url }],
+  creator: siteConfig.name,
+  publisher: siteConfig.name,
+  category: "technology",
+  keywords: [...siteConfig.keywords],
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
+  alternates: {
+    canonical: siteConfig.url,
+  },
   openGraph: {
-    title: "Portofolio Bariq Firjatullah - Full-Stack & DevOps Specialist",
-    description:
-      "Jelajahi proyek, pengalaman, dan keahlian teknis Bariq Firjatullah dalam pengembangan web modern dan otomatisasi infrastruktur.",
-    url: "https://bariqfirjatullah.my.id", // PASTIKAN URL INI BENAR
-    images: [
-      {
-        url: "/og-image.png", // PASTIKAN FILE GAMBAR INI ADA DI FOLDER /public
-        width: 1200,
-        height: 630,
-      },
-    ],
-    locale: "id_ID",
     type: "website",
+    locale: siteConfig.locale,
+    url: siteConfig.url,
+    siteName: siteConfig.name,
+    title: siteConfig.title,
+    description: siteConfig.description,
   },
   twitter: {
     card: "summary_large_image",
-    title: "Bariq Firjatullah | Full-Stack Developer & DevOps Engineer",
-    description:
-      "Web Developer dengan keahlian di TypeScript, Node.js, Laravel, React, Docker, dan CI/CD.",
-    images: ["/og-image.png"], // PASTIKAN GAMBAR INI ADA
+    title: siteConfig.title,
+    description: siteConfig.description,
   },
-  keywords:
-    "Full-Stack Developer, DevOps Engineer, Web Developer, TypeScript, Node.js, PHP, Laravel, React, Docker, Nginx, CI/CD, Instruktur Web, PortfolioClient, Bariq Firjatullah, Malang",
-  creator: "Bariq Firjatullah",
-  publisher: "Bariq Firjatullah",
+  icons: {
+    icon: "/icon",
+  },
+  manifest: "/manifest.webmanifest",
+  other: {
+    "geo.region": "ID-JI",
+    "geo.placename": siteConfig.location.city,
+  },
 };
 
-const geist = Geist({
+const dmSans = DM_Sans({
   subsets: ["latin"],
-  variable: "--font-geist-sans",
+  variable: "--font-dm-sans",
+});
+
+const sourceSerif = Source_Serif_4({
+  subsets: ["latin"],
+  variable: "--font-source-serif",
 });
 
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    name: "Bariq Firjatullah",
-    url: "https://bariqfirjatullah.my.id", // PASTIKAN URL INI BENAR
-    jobTitle: "Web Developer & DevOps Engineer",
-    email: "bariqfirjatullah1803@gmail.com",
-    telephone: "+6285173001803",
-    address: {
-      "@type": "PostalAddress",
-      addressLocality: "Malang",
-      addressRegion: "Jawa Timur",
-      addressCountry: "ID",
-    },
-    alumniOf: {
-      "@type": "EducationalOrganization",
-      name: "SMKN 4 Malang",
-    },
-    knowsAbout: [
-      "Full-Stack Development",
-      "DevOps",
-      "TypeScript",
-      "Node.js",
-      "PHP",
-      "Laravel",
-      "React.js",
-      "Docker",
-      "Nginx",
-      "CI/CD",
-      "SEO",
-    ],
-    sameAs: [
-      "https://www.linkedin.com/in/bariq-firjatullah",
-      "https://github.com/bariqfirjatullah1803",
-    ],
-  };
   return (
-    <ClerkProvider>
-      <html lang="id" className={`${geist.variable}`}>
-        <body>
-          <script
-            type="application/ld+json"
-            dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-          />
-          <TRPCReactProvider>{children}</TRPCReactProvider>
-          <GoogleAnalytics gaId="G-N11PP8KEM0" />
-        </body>
-      </html>
-    </ClerkProvider>
+    <html lang="en" className={`${dmSans.variable} ${sourceSerif.variable}`}>
+      <body>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(personJsonLd),
+          }}
+        />
+        <TRPCReactProvider>{children}</TRPCReactProvider>
+        <GoogleAnalytics gaId={siteConfig.googleAnalyticsId} />
+      </body>
+    </html>
   );
 }
