@@ -6,15 +6,15 @@ export const heroPhrases = [
 ];
 
 export const heroTagline =
-  "I build web products that hold up in production — solid backends, clean APIs, and deployments that don't slow your team down.";
+  "I build production-ready web products — solid backends, clean APIs, and deployments that don't slow teams down.";
 
 export const statusBadge = "Open to interesting opportunities";
 
 export const aboutContent = {
   title: "Web Developer",
   paragraphs: [
-    "I build software that works in the real world — not just on localhost. That means APIs designed with intent, databases that won't become a bottleneck, and frontends wired to backends that actually make sense.",
-    "My work spans company sites, LMS platforms, subscription systems, and internal tools. Whether I'm owning the backend, jumping in full-stack, or setting up Docker and CI/CD for a clean release — I take responsibility until it's live.",
+    "Web Developer based in Malang, Indonesia. I build production-ready web products — solid backends, clean APIs, and deployments that don't slow teams down.",
+    "I work across full-stack, backend, and DevOps: TypeScript, Node.js, React, Laravel, Docker, and CI/CD. Experience spans LMS platforms, SaaS tools, AI workflows, and company sites — from development through release.",
     "I'm not interested in code for code's sake. I care about shipping features that perform, deploy predictably, and stay easy to maintain as the product grows.",
   ],
   whyHireMe: [
@@ -387,7 +387,7 @@ export const siteCopy = {
     label: "About",
     title: "Built to ship. Engineered to last.",
     description:
-      "Backend depth, full-stack range, and the DevOps know-how to get it live.",
+      "Full-stack, backend, and DevOps — from development through release.",
   },
   experience: {
     label: "Experience",
@@ -417,7 +417,7 @@ export const siteCopy = {
     label: "Contact",
     title: "Have something in mind?",
     description:
-      "Open to the right opportunity — full-time, remote, or project-based. Connect on LinkedIn or drop a message below.",
+      "Open to interesting opportunities — full-time, remote, or project-based. Connect on LinkedIn or drop a message below.",
   },
 };
 

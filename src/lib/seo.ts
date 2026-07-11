@@ -1,9 +1,9 @@
 export const siteConfig = {
   name: "Bariq Firjatullah",
-  title: "Bariq Firjatullah | Web Developer Portfolio",
+  title: "Bariq Firjatullah | Web Developer — Full-Stack & DevOps",
   shortTitle: "Bariq Firjatullah",
   description:
-    "Portfolio of Bariq Firjatullah — Web Developer specializing in backend development, full-stack applications, and DevOps. Experienced with TypeScript, Node.js, React, Laravel, Docker, and CI/CD. Based in Malang, Indonesia. Open to opportunities.",
+    "Bariq Firjatullah — Web Developer in Malang, Indonesia. Full-stack, backend, and DevOps with TypeScript, Node.js, React, Laravel, Docker, and CI/CD. Open to opportunities.",
   url: "https://bariqfirjatullah.my.id",
   locale: "en_US",
   jobTitle: "Web Developer",
